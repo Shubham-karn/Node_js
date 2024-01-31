@@ -16,6 +16,7 @@ const getUserDetail = async (requestUser, currentUser, cb) => {
       id: user.id,
       name: user.name,
       type: user.type,
+      thumbnail: user.thumbnail,
       field: user.field,
     };
 
@@ -33,12 +34,21 @@ const getUserDetail = async (requestUser, currentUser, cb) => {
 
 exports.getUserProfile = async (req, res) => {
   const { user } = req;
-  if (!user) return res.status(401).send(Message('Not logged in.'));
+  // console.log(user, 'sachin');
+  if (!user) return res.status(401).send(Message('Not logged in in.'));
 
   getUserDetail(req.user, req.user, (err, currentUser) => {
     if (err) return res.send(Message(err));
     return res.send(Message('', true, currentUser));
   });
+};
+exports.getUserStatus = async (req, res) => {
+  console.log(req.user, 'get user status called');
+  const { user } = req;
+  if (!user) return res.status(401).send(Message('Not logged in.'));
+  if (user) {
+    return res.send(Message('User is logged in.', true, user));
+  }
 };
 
 //edit existing user

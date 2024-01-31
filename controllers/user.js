@@ -149,6 +149,9 @@ exports.logoutUser = async (req, res) => {
     res
       .clearCookie('jwt', cookie)
       .json(Message('Logged out successfully.', true));
+  } else if (req.isauthenticated()) {
+    req.logout();
+    res.send(Message('Logged out successfully.', true));
   } else {
     res.send(Message('Invalid jwt.'));
   }

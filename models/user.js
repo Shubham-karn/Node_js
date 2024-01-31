@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    googleId: {
+      type: String,
+      required: false,
+    },
     name: {
       type: String,
       required: true,
@@ -20,12 +24,16 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
     },
     type: {
       type: String,
       required: true,
       default: 'user',
+    },
+    thumbnail: {
+      type: String,
+      required: false,
     },
   },
   {
@@ -37,8 +45,9 @@ const UserSchema = new mongoose.Schema(
 
 //pre save hook
 UserSchema.pre('save', async function (next, doc) {
-  if (!this.isModified('password')) return next();
+  if (this.googleId) return next();
 
+  if (!this.isModified('password')) return next();
   //if password is changed or user is new, encrypt the password
   try {
     const salt = await bcrypt.genSalt(SALT_FACTOR);

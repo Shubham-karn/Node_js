@@ -9,18 +9,19 @@ const {
   validateUserSignIn,
 } = require('../../middleware/validators/user');
 
-const { getUserProfile, addField } = require('../../controllers/profile');
+const {
+  getUserProfile,
+  addField,
+  getUserStatus,
+} = require('../../controllers/profile');
 
 const router = express.Router();
 
 router.post('/create', validateUserSignUp, createUser);
 router.post('/login', validateUserSignIn, loginUser);
 router.post('/logout', logoutUser);
-
+router.get('/status', authenticate, getUserStatus);
 router.get('/profile', authenticate, getUserProfile);
-router.get('/test', (req, res) => {
-  res.send('hello');
-});
 
 //field is the problem of the user
 router.post('/add-field', authenticate, addField);

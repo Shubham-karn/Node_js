@@ -9,6 +9,10 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  project_description: {
+    type: String,
+    required: false,
+  },
   creator_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

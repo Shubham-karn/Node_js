@@ -16,8 +16,9 @@ const projectShareableLinksSchema = new mongoose.Schema({
     required: true,
     enum: ['Edit', 'View'],
   },
-  expiration_date: {
+  created_at: {
     type: Date,
+    default: Date.now,
   },
 });
 
